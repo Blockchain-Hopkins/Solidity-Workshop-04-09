@@ -2,8 +2,11 @@ pragma solidity >=0.7.0 <0.9.0;
 
 contract House {
     address payable landlord;
-
     uint number_of_rooms;
+
+    constructor() {
+        landlord = payable(msg.sender);
+    }
 
     struct Room {
         uint room_number;
