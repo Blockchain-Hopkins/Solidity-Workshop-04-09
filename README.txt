@@ -1,4 +1,4 @@
-Blockchain@Hopkins is hosted an online Solidity workshop Saturday, April 9th @ 4pm. Solidity is an object-oriented, high-level language for implementing smart contracts. It is influenced by C++, Python, and Javascript. Smart contracts are programs which govern the behaviour of accounts within the Ethereum state. 
+Blockchain@Hopkins hosted an online Solidity workshop Saturday, April 9th @ 4pm. Solidity is an object-oriented, high-level language for implementing smart contracts. It is influenced by C++, Python, and Javascript. Smart contracts are programs which govern the behaviour of accounts within the Ethereum state. 
 
 This workshop is meant as an introduction for people that have wanted to start building blockchain-based applications but unsure how to get started. Students should have taken Intro to Programming, and those in Intermediate Programming will find the material familiar. We’ll be looking at an example of a housing lease agreement.
 
