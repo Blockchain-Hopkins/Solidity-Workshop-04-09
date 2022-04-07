@@ -83,6 +83,7 @@ contract House {
     */
     modifier onlyIfOccupied(uint _room_number) {
         require(Rooms_by_Number[_room_number].vacant == false, "Room is already vacant");
+        _;
     }
 
     /**
@@ -127,7 +128,7 @@ contract House {
     * @param _rent_per_month The rent per month of the new rooms.
     * @param _security_deposit The security deposit of the new rooms.
     */
-    function addRooms(uint _rooms, uint _rent_per_month, uint _security_deposit) public pure onlyLandlord() {
+    function addRooms(uint _rooms, uint _rent_per_month, uint _security_deposit) public onlyLandlord() {
         bool _vacancy = true;
         for (uint i = 0; i < _rooms; i++) {
             Rooms_by_Number[number_of_rooms++] = Room(
