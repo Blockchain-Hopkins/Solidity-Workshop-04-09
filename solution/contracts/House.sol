@@ -69,7 +69,7 @@ contract House {
     * @dev Modifier that checks if the message sender is anyone but the landlord.
     */
     modifier notLandlord() {
-        require(msg.sender != landlord, "Only the landlord can add rooms");
+        require(msg.sender != landlord, "The landlord cannot rent rooms");
         _;
     }
 
@@ -139,7 +139,6 @@ contract House {
     * @param _security_deposit The security deposit of the new rooms.
     */
     function addRooms(uint _rooms, uint _rent_per_month, uint _security_deposit) public onlyLandlord() {
-        require(msg.sender != address(0));
         bool _vacancy = true;
         for (uint i = 0; i < _rooms; i++) {
             Rooms_by_Number[number_of_rooms++] = Room(
@@ -159,7 +158,6 @@ contract House {
     * @notice The room must be vacant.
     */
     function signAgreement(uint _room_number, uint _lease_duration) public payable notLandlord() enoughAgreementFee(_room_number) onlyIfVacant(_room_number) {
-        require(msg.sender != address(0));
         uint _total_fee = Rooms_by_Number[_room_number].rent_per_month + Rooms_by_Number[_room_number].security_deposit;
         landlord.transfer(_total_fee);
         Rooms_by_Number[_room_number].vacant = false;
@@ -174,7 +172,7 @@ contract House {
             _room_number,       // int room_number;
             _total_fee,         // uint amount;
             block.timestamp     // uint timestamp;
-        );// TODO: Implement the signAgreement function here.
+        );
     }
 
     /**
@@ -183,7 +181,6 @@ contract House {
     * @notice The tenant must have signed an agreement with the landlord.
     */
     function payRent(uint _room_number) public payable onlyTenant(_room_number) onlyIfPaymentsLeft(_room_number) enoughRent(_room_number) {
-        require(msg.sender != address(0));
         uint _rent = Rooms_by_Number[_room_number].rent_per_month;
         landlord.transfer(_rent);
         uint payment_number = Agreements_by_Number[_room_number].number_of_payments;
@@ -201,7 +198,6 @@ contract House {
     * @notice The landlord must have funds to refund the security deposit.
     */
     function terminateAgreement(uint _room_number) public payable onlyLandlord() onlyIfOccupied(_room_number) enoughSecurityDeposit(_room_number) {
-        require(msg.sender != address(0));
         require(Rooms_by_Number[_room_number].vacant == false, "Room is already vacant");
         uint _security_deposit = Rooms_by_Number[_room_number].security_deposit;
         address payable _tenant = Agreements_by_Number[_room_number].tenant;
@@ -209,4 +205,3 @@ contract House {
         Rooms_by_Number[_room_number].vacant = true;
     }
 }
-
