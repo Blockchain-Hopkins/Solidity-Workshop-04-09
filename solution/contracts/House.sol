@@ -44,17 +44,6 @@ contract House {
 
     mapping(uint => Agreement) public Agreements_by_Number;
 
-    /**
-    * @dev A struct that represents a payment made by a tenant.
-    */
-    struct Payment {
-        uint room_number;
-        uint amount;
-        uint timestamp;
-    }
-
-    mapping(uint => Payment[]) public Payments_by_Number;
-
     // MODIFIERS -----------------------------------------------------------------
 
     /**
@@ -138,7 +127,7 @@ contract House {
     * @param _rent_per_month The rent per month of the new rooms.
     * @param _security_deposit The security deposit of the new rooms.
     */
-    function addRooms(uint _rooms, uint _rent_per_month, uint _security_deposit) public onlyLandlord() {
+    function addRooms(uint _rooms, uint _rent_per_month, uint _security_deposit) public pure onlyLandlord() {
         bool _vacancy = true;
         for (uint i = 0; i < _rooms; i++) {
             Rooms_by_Number[number_of_rooms++] = Room(
@@ -148,6 +137,15 @@ contract House {
                 _vacancy            // bool vacant;
             );
         }
+    }
+
+    /**
+    * @dev Lets anyone view the leasing fee for a room.
+    * @param _room_number The room number to view the fee for.
+    * @return The leasing fee for the room.
+    */
+    function getLeasingFee(uint _room_number) public view returns (uint) {
+        return Rooms_by_Number[_room_number].rent_per_month + Rooms_by_Number[_room_number].security_deposit;
     }
 
     /**
@@ -168,11 +166,15 @@ contract House {
             block.timestamp,    // uint timestamp;
             payable(msg.sender) // address payable tenant;
         );
-        Payments_by_Number[_room_number][0] = Payment(
-            _room_number,       // int room_number;
-            _total_fee,         // uint amount;
-            block.timestamp     // uint timestamp;
-        );
+    }
+
+    /**
+    * @dev Lets the tenant see the rent for their room.
+    * @param _room_number The room number of the room to see the rent for.
+    * @return The rent for the room.
+    */
+    function getRent(uint _room_number) public view onlyTenant(_room_number) returns (uint) {
+        return Rooms_by_Number[_room_number].rent_per_month;
     }
 
     /**
@@ -183,12 +185,6 @@ contract House {
     function payRent(uint _room_number) public payable onlyTenant(_room_number) onlyIfPaymentsLeft(_room_number) enoughRent(_room_number) {
         uint _rent = Rooms_by_Number[_room_number].rent_per_month;
         landlord.transfer(_rent);
-        uint payment_number = Agreements_by_Number[_room_number].number_of_payments;
-        Payments_by_Number[_room_number][payment_number] = Payment(
-            _room_number,       // int room_number;
-            _rent,              // uint amount;
-            block.timestamp     // uint timestamp;
-        );
     }
 
     /**
@@ -203,5 +199,12 @@ contract House {
         address payable _tenant = Agreements_by_Number[_room_number].tenant;
         _tenant.transfer(_security_deposit);
         Rooms_by_Number[_room_number].vacant = true;
+        Agreements_by_Number[_room_number] = Agreement(
+            _room_number,       // uint room_number;
+            0,                  // uint lease_duration;
+            0,                  // uint number_of_payments;
+            0,                  // uint timestamp;
+            payable(address(0)) // address payable tenant;
+        );
     }
 }

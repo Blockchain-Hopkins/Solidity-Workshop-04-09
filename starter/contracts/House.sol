@@ -35,15 +35,6 @@ contract House {
 
     // TODO: Define the mapping between room numbers and Agreement structs here.
 
-    /**
-    * @dev A struct that represents a payment made by a tenant.
-    */
-    struct Payment {
-        //TODO: Define the Payment struct here.
-    }
-
-    // TODO: Define the mapping between room numbers and Payment arrays here.
-
     // MODIFIERS -----------------------------------------------------------------
 
     /**
@@ -122,6 +113,15 @@ contract House {
     }
 
     /**
+    * @dev Lets anyone view the leasing fee for a room.
+    * @param _room_number The room number to view the fee for.
+    * @return The leasing fee for the room.
+    */
+    function getLeasingFee(uint _room_number) public view returns (uint) {
+        // TODO: Implement the getLeasingFee function here.
+    }
+
+    /**
     * @dev Lets the tenant sign a new agreement with the landlord.
     * @param _room_number The room number of the room to sign the agreement for.
     * @param _lease_duration The lease duration of the agreement.
@@ -130,6 +130,15 @@ contract House {
     */
     function signAgreement(uint _room_number, uint _lease_duration) public payable notLandlord() enoughAgreementFee(_room_number) onlyIfVacant(_room_number) {
         // TODO: Implement the signAgreement function here.
+    }
+
+    /**
+    * @dev Lets the tenant see the rent for their room.
+    * @param _room_number The room number of the room to see the rent for.
+    * @return The rent for the room.
+    */
+    function getRent(uint _room_number) public view onlyTenant(_room_number) returns (uint) {
+        // TODO: Implement the getRent function here.
     }
 
     /**
