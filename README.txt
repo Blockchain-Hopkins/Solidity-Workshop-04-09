@@ -1,18 +1,11 @@
-REMIX EXAMPLE PROJECT
+Blockchain@Hopkins is hosted an online Solidity workshop Saturday, April 9th @ 4pm. Solidity is an object-oriented, high-level language for implementing smart contracts. It is influenced by C++, Python, and Javascript. Smart contracts are programs which govern the behaviour of accounts within the Ethereum state. 
 
-Remix example project is present when Remix loads for the very first time or there are no files existing in the File Explorer. 
-It contains 3 directories:
+This workshop is meant as an introduction for people that have wanted to start building blockchain-based applications but unsure how to get started. Students should have taken Intro to Programming, and those in Intermediate Programming will find the material familiar. We’ll be looking at an example of a housing lease agreement.
 
-1. 'contracts': Holds three contracts with different complexity level, denoted with number prefix in file name.
-2. 'scripts': Holds two scripts to deploy a contract. It is explained below.
-3. 'tests': Contains one test file for 'Ballot' contract with unit tests in Solidity.
+Event: Solidity Workshop
+Date/Time: Saturday April 9th, 4pm
+Zoom: https://JHUBlueJays.zoom.us/j/93182556298?pwd=SUhaRFdUeFBRdFZUWk16Vk1Mc29rQT09
 
-SCRIPTS
+Walkthrough: https://nonstop-station-3e4.notion.site/Blockchain-Hopkins-Solidity-Workshop-712af1bea9f14630b13cbb8b3e16e593
 
-The 'scripts' folder contains example async/await scripts for deploying the 'Storage' contract.
-For the deployment of any other contract, 'contractName' and 'constructorArgs' should be updated (along with other code if required). 
-Scripts have full access to the web3.js and ethers.js libraries.
-
-To run a script, right click on file name in the file explorer and click 'Run'. Remember, Solidity file must already be compiled.
-
-Output from script will appear in remix terminal.
+Blockchain@Hopkins is a student-run hub for the Johns Hopkins community to learn and share information about blockchain technology, and its impacts in shaping the future. For more information, please join our Discord. Links are available at: https://www.blockchainathopkins.com/
